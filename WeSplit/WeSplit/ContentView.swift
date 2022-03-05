@@ -18,6 +18,7 @@ struct ContentView: View {
         let amountPerPerson = grandTotal / peopleCount
         return amountPerPerson
     }
+
     var body: some View {
         NavigationView {
             Form {
@@ -29,12 +30,11 @@ struct ContentView: View {
                             code: Locale.current.currencyCode ?? "BRL"
                         ))
                         .keyboardType(.decimalPad)
-                        .focused($amountIsFocused)
 
 
                     Picker("Number of people", selection: $numberOfPeople) {
                         ForEach(2 ..< 100) {
-                            Text("\($0) people")
+                            Text("\($0) pessoas")
                         }
                     }
                 }
@@ -53,6 +53,8 @@ struct ContentView: View {
 
                 Section {
                     Text(totalPerPerson, format: .currency(code: "BRL"))
+                } header: {
+                    Text("Amount per person")
                 }
             }
             .navigationTitle("WeSplit")

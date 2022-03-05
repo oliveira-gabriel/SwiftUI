@@ -8,6 +8,13 @@ struct ContentView: View {
 
     let tipPercentages = [10, 15, 20, 25, 0]
 
+    var grandTotal: Double {
+        let tipSelection = Double(tipPercentage)
+        let tipValue = checkAmount / 100 * tipSelection
+        let grandTotal = checkAmount + tipValue
+        return grandTotal
+    }
+
     var totalPerPerson: Double {
         // calculate the total per person here
         let peopleCount = Double(numberOfPeople + 2)
@@ -39,22 +46,36 @@ struct ContentView: View {
                     }
                 }
 
-                Section {
+//                Section {
+//
+//                    Picker("Tip percentage",selection: $tipPercentage) {
+//                        ForEach(tipPercentages, id: \.self){
+//                            Text($0, format: .percent)
+//                        }
+//                    }
+//                    .pickerStyle(.segmented)
+//                } header: {
+//                    Text("How much tip do you want to leave?")
+//                }
 
-                    Picker("Tip percentage",selection: $tipPercentage) {
-                        ForEach(tipPercentages, id: \.self){
-                            Text($0, format: .percent)
+                Section(header: Text("How much tip do you want to leave?")) {
+                    Picker("Tip percentage", selection: $tipPercentage) {
+                        ForEach(0 ..< 101, id: \.self) {
+                            Text("\($0)%")
                         }
                     }
-                    .pickerStyle(.segmented)
-                } header: {
-                    Text("How much tip do you want to leave?")
                 }
 
                 Section {
                     Text(totalPerPerson, format: .currency(code: "BRL"))
                 } header: {
                     Text("Amount per person")
+                }
+
+                Section {
+                    Text("$\(grandTotal, specifier: "%.2f")")
+                } header: {
+                    Text("Amount for the check")
                 }
             }
             .navigationTitle("WeSplit")

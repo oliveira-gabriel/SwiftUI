@@ -8,7 +8,9 @@ struct ContentView: View {
 
     @FocusState private var inputIsFocused: Bool
 
-    let units = [ "Feet", "Kilometers", "Meters", "Miles", "Yards"]
+    let units: [UnitLength]  = [.feet, .kilometers, .meters, .miles, .yards]
+
+    let formatter: MeasurementFormatter
 
     var result: String {
         var inputToMetersMultiplier: Double
@@ -89,6 +91,11 @@ struct ContentView: View {
                 }
             }
         }
+    }
+    init() {
+        formatter = MeasurementFormatter()
+        formatter.unitOptions = .providedUnit
+        formatter.unitStyle = .long
     }
 }
 

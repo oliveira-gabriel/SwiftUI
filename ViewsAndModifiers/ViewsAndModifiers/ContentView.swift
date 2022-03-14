@@ -10,15 +10,21 @@ struct Title: ViewModifier {
             .clipShape(RoundedRectangle(cornerRadius: 10))
     }
 }
+extension View {
+    func titleStyle() -> some View {
+        modifier(Title())
+    }
+}
 
 struct ContentView: View {
     var body: some View {
         VStack(spacing: 10) {
             Text("Hello World")
-                .modifier(Title())
+                .titleStyle()
         }
     }
 }
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

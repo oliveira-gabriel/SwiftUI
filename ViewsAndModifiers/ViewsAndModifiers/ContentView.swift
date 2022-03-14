@@ -6,12 +6,14 @@ struct ContentView: View {
     }
     let motto2 = Text("nunquam titillandus")
 
+    @ViewBuilder var spells: some View {
+        Text("Lumos")
+        Text("Obliviate")
+    }
+
     var body: some View {
         VStack {
-            motto1
-                .foregroundColor(.red)
-            motto2
-                .foregroundColor(.blue)
+            spells
         }
     }
 }

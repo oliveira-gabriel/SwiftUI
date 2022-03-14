@@ -4,7 +4,6 @@ struct FlagImage: View {
     var image: String
 
     var body: some View {
-//        content
         Image(image)
         .renderingMode(.original)
         .clipShape(Capsule())
@@ -40,6 +39,30 @@ struct ContentView: View {
     @State private var opacityAmount = 1.0
     @State private var rotationAmount = 0.0
     @State private var wrongRotationAmount = [0.0, 0.0, 0.0]
+
+    func answerTapped(_ number: Int) {
+        if number == correctAnswer {
+            score += 1
+            scoreTitle = "CORRECT!"
+            scoreMessage = "Your score is: \(score)"
+            rotationAmount = 0.0
+
+            withAnimation(.interpolatingSpring(stiffness: 20, damping: 5)) {
+                rotationAmount = 360
+            }
+
+        } else {
+            score -= 1
+            scoreTitle = "!WRONG!"
+            scoreMessage = "That's the flag of \(countries[number])\nYour score is now: \(score)"
+
+            withAnimation(Animation.interpolatingSpring(mass: 1, stiffness: 120, damping: 40, initialVelocity: 200)) {
+                wrongRotationAmount[number] = 5
+            }
+
+        }
+        showingScore = true
+    }
 
     var body: some View {
 
@@ -89,29 +112,7 @@ struct ContentView: View {
         }
     }
 
-    func answerTapped(_ number: Int) {
-        if number == correctAnswer {
-            score += 1
-            scoreTitle = "CORRECT!"
-            scoreMessage = "Your score is: \(score)"
-            rotationAmount = 0.0
 
-            withAnimation(.interpolatingSpring(stiffness: 20, damping: 5)) {
-                rotationAmount = 360
-            }
-
-        } else {
-            score -= 1
-            scoreTitle = "!WRONG!"
-            scoreMessage = "That's the flag of \(countries[number])\nYour score is now: \(score)"
-
-            withAnimation(Animation.interpolatingSpring(mass: 1, stiffness: 120, damping: 40, initialVelocity: 200)) {
-                wrongRotationAmount[number] = 5
-            }
-
-        }
-        showingScore = true
-    }
 
     func askQuestion() {
         countries.shuffle()
